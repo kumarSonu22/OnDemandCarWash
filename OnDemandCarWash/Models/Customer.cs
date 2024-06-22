@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnDemandCarWash.Models
 {
     public class Customer
     {
         [Key]
+        [ForeignKey("UserId")]
         public int UserId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }

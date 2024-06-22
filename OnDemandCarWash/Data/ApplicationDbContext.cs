@@ -20,9 +20,8 @@ namespace OnDemandCarWash.Data
         {
 
             modelBuilder.Entity<Car>()
-      .HasOne(c => c.User)
-      .WithMany(u => u.Car)
-      .HasForeignKey(c => c.UserId)
+      .HasOne(c => c.user)
+      .WithMany(u => u.car)
        .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Customer>()
@@ -30,34 +29,29 @@ namespace OnDemandCarWash.Data
            
 
             modelBuilder.Entity<Order>()
-          .HasOne(o => o.User)
-          .WithMany(u => u.Order)
-          .HasForeignKey(o => o.UserId)
+          .HasOne(o => o.user)
+          .WithMany(u => u.order)
+         .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Order>()
+          .HasOne(o => o.car)
+          .WithMany(c=>c.order)
           .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Order>()
-          .HasOne(o => o.Car)
-          .WithMany()
-          .HasForeignKey(o => o.CarId)
-          .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Order>()
-          .HasOne(o => o.Package)
-          .WithMany(p => p.Order)
-          .HasForeignKey(o => o.PackageId)
+          .HasOne(o => o.package)
+          .WithMany(p => p.order)
           .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Payment>()
-          .HasOne(p => p.User)
-          .WithMany(u => u.Payment)
-          .HasForeignKey(p => p.UserId)
+          .HasOne(p => p.user)
+          .WithMany(u => u.payment)
           .OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Entity<Review>()
-          .HasOne(r => r.User)
-          .WithMany(u => u.Review)
-          .HasForeignKey(r => r.UserId)
+          .HasOne(r => r.user)
+          .WithMany(u => u.review)
           .OnDelete(DeleteBehavior.Restrict);
         }
     }

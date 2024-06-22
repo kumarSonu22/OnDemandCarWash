@@ -10,6 +10,6 @@ namespace OnDemandCarWash.Models
         public string Description { get; set; }
         public decimal Price { get; set; } = 100.25m;
 
-        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Order> order { get; set; }
     }
 }

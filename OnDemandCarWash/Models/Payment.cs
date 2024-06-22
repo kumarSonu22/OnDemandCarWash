@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnDemandCarWash.Models
 {
@@ -6,9 +7,11 @@ namespace OnDemandCarWash.Models
     {
         [Key]
         public int PaymentId { get; set; } // Primary Key
-        public int UserId { get; set; } // Foreign Key
         public string PaymentType { get; set; }
+        
+        [ForeignKey("UserId")]
+        public int UserId { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User user { get; set; }
     }
 }

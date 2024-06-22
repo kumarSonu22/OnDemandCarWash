@@ -14,9 +14,9 @@ namespace OnDemandCarWash.Models
         public string Address { get; set; }
         public string PaymentDetails { get; set; }
 
-        public virtual ICollection<Car> Car { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
-        public virtual ICollection<Payment> Payment { get; set; }
-        public virtual ICollection<Review> Review { get; set; }
+        public virtual ICollection<Car> car { get; set; }
+        public virtual ICollection<Order> order { get; set; }
+        public virtual ICollection<Payment> payment { get; set; }
+        public virtual ICollection<Review> review { get; set; }
     }
 }

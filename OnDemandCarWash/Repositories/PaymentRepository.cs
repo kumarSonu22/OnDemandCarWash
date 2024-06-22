@@ -8,9 +8,9 @@ namespace OnDemandCarWash.Repositories
 
     public class PaymentRepository : IPaymentRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDBContext _context;
 
-        public PaymentRepository(ApplicationDbContext context)
+        public PaymentRepository(ApplicationDBContext context)
         {
             _context = context;
         }

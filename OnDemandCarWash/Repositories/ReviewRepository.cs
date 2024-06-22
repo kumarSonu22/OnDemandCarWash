@@ -7,9 +7,9 @@ namespace OnDemandCarWash.Repositories
 {
     public class ReviewRepository : IReviewRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDBContext _context;
 
-        public ReviewRepository(ApplicationDbContext context)
+        public ReviewRepository(ApplicationDBContext context)
         {
             _context = context;
         }

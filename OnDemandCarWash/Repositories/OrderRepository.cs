@@ -7,9 +7,9 @@ namespace OnDemandCarWash.Repositories
 {
         public class OrderRepository : IOrderRepository
         {
-            private readonly ApplicationDbContext _context;
+            private readonly ApplicationDBContext _context;
 
-            public OrderRepository(ApplicationDbContext context)
+            public OrderRepository(ApplicationDBContext context)
             {
                 _context = context;
             }

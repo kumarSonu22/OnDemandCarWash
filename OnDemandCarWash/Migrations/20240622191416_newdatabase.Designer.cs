@@ -11,9 +11,9 @@ using OnDemandCarWash.Data;
 
 namespace OnDemandCarWash.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240622164234_dbCarwash2")]
-    partial class dbCarwash2
+    [DbContext(typeof(ApplicationDBContext))]
+    [Migration("20240622191416_newdatabase")]
+    partial class newdatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,16 +53,18 @@ namespace OnDemandCarWash.Migrations
 
                     b.HasKey("CarId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Cars");
                 });
 
             modelBuilder.Entity("OnDemandCarWash.Models.Customer", b =>
                 {
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -80,10 +82,6 @@ namespace OnDemandCarWash.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ProfilePicture")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -91,7 +89,12 @@ namespace OnDemandCarWash.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.HasKey("CustomerId");
+                    b.Property<int>("UserId1")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Customers");
                 });
@@ -127,6 +130,12 @@ namespace OnDemandCarWash.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");
+
+                    b.HasIndex("CarId");
+
+                    b.HasIndex("PackageId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -172,6 +181,8 @@ namespace OnDemandCarWash.Migrations
 
                     b.HasKey("PaymentId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Payments");
                 });
 
@@ -200,6 +211,8 @@ namespace OnDemandCarWash.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ReviewId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
                 });
@@ -236,9 +249,100 @@ namespace OnDemandCarWash.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("OnDemandCarWash.Models.Car", b =>
+                {
+                    b.HasOne("OnDemandCarWash.Models.User", "User")
+                        .WithMany("Car")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnDemandCarWash.Models.Customer", b =>
+                {
+                    b.HasOne("OnDemandCarWash.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnDemandCarWash.Models.Order", b =>
+                {
+                    b.HasOne("OnDemandCarWash.Models.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("OnDemandCarWash.Models.Package", "Package")
+                        .WithMany("Order")
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("OnDemandCarWash.Models.User", "User")
+                        .WithMany("Order")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+
+                    b.Navigation("Package");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnDemandCarWash.Models.Payment", b =>
+                {
+                    b.HasOne("OnDemandCarWash.Models.User", "User")
+                        .WithMany("Payment")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnDemandCarWash.Models.Review", b =>
+                {
+                    b.HasOne("OnDemandCarWash.Models.User", "User")
+                        .WithMany("Review")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnDemandCarWash.Models.Package", b =>
+                {
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("OnDemandCarWash.Models.User", b =>
+                {
+                    b.Navigation("Car");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Payment");
+
+                    b.Navigation("Review");
                 });
 #pragma warning restore 612, 618
         }
